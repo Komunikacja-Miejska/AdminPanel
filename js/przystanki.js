@@ -49,10 +49,10 @@ document.addEventListener("mapClickedEvent", (e) =>
     clickedCoordinates = e.detail;
     document.getElementById("szerokoscIn").value = clickedCoordinates.lt;
     document.getElementById("dlugoscIn").value = clickedCoordinates.lg;
-    canUpdate();
+    canEdit();
   }
 )
-canUpdate();
+canEdit();
 
 async function loadPrzystanki() {
     let przystanki = await api.getPrzystankiAll();
@@ -89,7 +89,7 @@ async function loadPrzystanki() {
           document.getElementById("opisIn").value = element.dataset.opis;
           document.getElementById("szerokoscIn").value = element.dataset.lt;
           document.getElementById("dlugoscIn").value = element.dataset.lg;
-          canUpdate();
+          canEdit();
         });
     });
 
@@ -102,10 +102,10 @@ async function loadPrzystanki() {
 await loadPrzystanki();
 
 
-document.getElementById("nazwaIn").addEventListener('change', canUpdate);
-document.getElementById("szerokoscIn").addEventListener('change', canUpdate);
-document.getElementById("dlugoscIn").addEventListener('change', canUpdate);
-function canUpdate() {
+document.getElementById("nazwaIn").addEventListener('change', canEdit);
+document.getElementById("szerokoscIn").addEventListener('change', canEdit);
+document.getElementById("dlugoscIn").addEventListener('change', canEdit);
+function canEdit() {
   let nazwa = document.getElementById("nazwaIn").value;
   let szerokosc = document.getElementById("szerokoscIn").value;
   let dlugosc = document.getElementById("dlugoscIn").value;
@@ -156,6 +156,7 @@ document.getElementById("addPrzystanek").addEventListener('click', addPrzystanek
 async function addPrzystanek() 
 {
     let przystanekModel = loadEditForm();
+
     if(przystanekModel == null)
     {
       return alert("Nie podano wszystkich danych");
@@ -163,7 +164,8 @@ async function addPrzystanek()
 
     await api.addPrzystanek(przystanekModel);
     currentPrzystanekId = null;
-    window.location.reload();
+    await loadPrzystanki();
+    await ShowPrzystankiAll();
 }
 
 async function deletePrzystanek(przystanekId) {

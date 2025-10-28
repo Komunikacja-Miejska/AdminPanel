@@ -75,7 +75,7 @@ async function loadTrasy() {
     trasyList.innerHTML += `
                     <li data-id_trasa="${element.id}" data-nazwa="${element.nazwaLinii}" data-opis="${element.opis}">
                         <p>${element.id}</p>
-                        <p>${element.nazwaLinii + element.opis}</p>
+                        <p>${element.nazwaLinii} ${element.opis}</p>
                         <button class="deleteTrasa">✖</button>
                     </li>
                 `;
@@ -101,6 +101,8 @@ async function loadTrasy() {
 
       //Load Kursy
       let trasaId = element.dataset.id_trasa;
+      currentTrasa = trasaId;
+      canEditTrasa();
       loadKursy(trasaId);
     });
   });
@@ -116,9 +118,31 @@ async function loadTrasy() {
   }
 }
 
+document.getElementById("addTrasaNazwa").addEventListener('change', canEditTrasa);
+function canEditTrasa()
+{
+  let addNazwaIn = document.getElementById("addTrasaNazwa").value;
+  let addBtn = document.getElementById("addTrasa");
+  let updateBtn = document.getElementById("updateTrasa")
+
+  if(currentTrasa == null)
+  {
+    updateBtn.style.backgroundColor = "gray";
+  }else
+  {
+    updateBtn.style.backgroundColor = "green";
+  }
+
+  if(addNazwaIn == "")
+  {
+    addBtn.style.backgroundColor = "gray";
+  }else
+  {
+    addBtn.style.backgroundColor = "green";
+  }
+}
 
 document.getElementById("addTrasa").addEventListener('click', addTrasa);
-
 async function addTrasa() 
 {
   let addNazwaIn = document.getElementById("addTrasaNazwa").value;
@@ -160,8 +184,7 @@ async function deleteTrasa(trasaId)
       await api.deleteTrasa(trasaId);
       currentTrasa = null;
       currentKurs = null;
-      document.getElementById("kursyList").innerHTML = "";
-      resetOdjazdy();
+      window.location.reload();
   }
 }
 
@@ -170,6 +193,7 @@ async function loadKursy(trasaId) {
   //No kurs selected
   currentKurs = null;
   currentTrasa = trasaId;
+  canAddKurs();
 
   let kursyList = document.getElementById("kursyList");
   let kursyJson = await api.getKursyAll(trasaId);
@@ -225,6 +249,19 @@ async function loadKursy(trasaId) {
 
 
 document.getElementById("addKurs").addEventListener('click', addKurs)
+function canAddKurs()
+{
+  let addBtn = document.getElementById("addKurs");
+  if(currentTrasa == null)
+  {
+    addBtn.style.backgroundColor = "gray";
+  }else
+  {
+    addBtn.style.backgroundColor = "green";
+  }
+}
+
+
 async function addKurs() {
     if(currentTrasa == null)
     {
@@ -349,6 +386,7 @@ function editPrzystanki()
     {
       editPrzystankiBtn.innerHTML = `<h2>Skoncz Edycje</h2>`
       editPrzystankiBtn.style.backgroundColor = "red";
+      mapOperations.clear();
       ShowPrzystankiAll();
     }else{
       editPrzystankiBtn.innerHTML = `<h2>Edytuj</h2>`

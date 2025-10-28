@@ -9,6 +9,11 @@ body{
     color: white;
 }
 
+html
+{
+    scroll-behavior: smooth;
+}
+
 nav {
     display: flex;
     background-color: #221F3F;
@@ -50,7 +55,7 @@ section div > h2{
 
 section ul{
     list-style: none;
-    width: 90%;
+    width: 100%;
 }
 
 section li{
@@ -60,7 +65,8 @@ section li{
     justify-content: space-between;
     text-align: center;
     border-bottom: 1px solid;
-    padding: 10px;
+    padding: 12px;
+    margin: 0 12px;
     font-size: 14px;
 }
 section li.is-selected{
@@ -74,15 +80,6 @@ section li button{
     cursor: pointer;
 }
 
-
-/*trasyKursySection*/
-.trasyKursySection{
-    height: 90vh;
-}
-.editTrasyContainer li{
-    cursor: default;
-}
-
 section input[type="text"]
 {
     background: none;
@@ -91,13 +88,51 @@ section input[type="text"]
     outline: none;
     font-size: 14px;
 }
+
+
+
+
+
+
+
+/*kursy.html*/
+.trasyKursySection{
+    height: 90vh;
+}
+.editTrasyContainer li{
+    cursor: default;
+}
+#trasyList, #kursyList, #przystankiList
+{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#trasyList::-webkit-scrollbar, 
+#kursyList::-webkit-scrollbar, 
+#przystankiList::-webkit-scrollbar
+{
+    width: 8px;
+}
+#trasyList::-webkit-scrollbar-thumb
+#kursyList::-webkit-scrollbar-thumb
+#przystankiList::-webkit-scrollbar-thumb {
+    background-color: green;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+#trasyList::-webkit-scrollbar-track
+#kursyList::-webkit-scrollbar-thumb
+#przystankiList::-webkit-scrollbar-thumb {
+    background-color: #000231;
+}
 .editTrasyContainer button
 {
     margin-top: 20px;
     font-size: 14px;
     width: 100%;
     padding: 10px;
-    background-color: green;
+    background-color: gray;
     color: white;
     border: none;
     border-top: 3px solid #000231;
@@ -113,7 +148,7 @@ section input[type="text"]
     font-size: 14px;
     width: 100%;
     padding: 10px;
-    background-color: green;
+    background-color: gray;
     color: white;
     border: none;
     border-bottom: 3px solid #000231;
@@ -135,12 +170,10 @@ section input[type="text"]
 .deletePrzystanek{
     color: red;
 }
-/*PrzystankiMapSection*/
-html
-{
-    scroll-behavior: smooth;
-}
 
+
+
+/*PrzystankiMapSection*/
 .przystankiMapSection{
     min-height: 100vh;
 }
@@ -202,18 +235,13 @@ html
     width: 100%;
     table-layout: fixed;
 }
-.mainMapSection tr:first-child {
-    height: 50vh;
-}
 .mainMapSection tr:last-child {
-    height: 10vh;
+    height: 20vh;
 }
-
 .mainMapSection td > div
 {
     width: 100%;
     height: 100%;
-    max-height: 100%;
     text-align: center;
     background-color: #221F3F;
     border-radius: 10px;
@@ -226,6 +254,27 @@ html
 .przystankiElement
 {
     width: 30%;
+}
+
+#przystankiList
+{
+    max-height: 88vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#przystankiList::-webkit-scrollbar
+{
+    width: 8px;
+}
+#przystankiList::-webkit-scrollbar-thumb {
+    background-color: green;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+#przystankiList::-webkit-scrollbar-track {
+    background-color: #000231;
+    border-bottom-right-radius: 10px;
 }
 
 #addPrzystanek, #updatePrzystanek
@@ -252,14 +301,24 @@ html
     background-color: darkgreen;
 }
 
+
+
 .editAddElement li:last-child
 {
     border: none;
 }
 
+.editAddElement div ul
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .editAddElement li
 {
-    width: 100%;
+    width: 90%;
+    margin: 0px;
 }
 
 .buttonBox{
